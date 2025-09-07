@@ -19,7 +19,7 @@ class LibraryDetailView(DetailView):
     template_name = 'relationship_app/library_detail.html'
     context_object_name = 'library'
 
-def register_view(request):
+def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
@@ -48,13 +48,22 @@ def logout_view(request):
     logout(request)
     return render(request, 'relationship_app/logout.html')
 
+def is_admin(user):
+    return user.is_authenticated and user.is_staff
+
 @user_passes_test(is_admin)
 def admin_view(request):
     return render(request, 'relationship_app/admin_view.html')
 
+def is_librarian(user):
+    return user.is_authenticated and user.groups.filter(name='Librarians').exists()
+
 @user_passes_test(is_librarian)
 def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
+
+def is_member(user):
+    return user.is_authenticated and user.groups.filter(name='Members').exists()
 
 @user_passes_test(is_member)
 def member_view(request):

@@ -14,8 +14,17 @@ class Book(models.Model):
     title = models.CharField(max_length=100)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
+    class Meta:
+        permissions = [
+            ("can_add_book", "Can add book"),
+            ("can_change_book", "Can edit book"),
+            ("can_delete_book", "Can delete book"),
+        ]
+
     def __str__(self):
-        return self.title
+        return f"{self.title} by {self.author}"
+
+
 
 class Library(models.Model):
     name = models.CharField(max_length=100)
@@ -52,19 +61,6 @@ def create_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
 
     
-class Book(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.ForeignKey('Author', on_delete=models.CASCADE)
-    publication_year = models.IntegerField()
 
-    class Meta:
-        permissions = [
-            ("can_add_book", "Can add book"),
-            ("can_change_book", "Can edit book"),
-            ("can_delete_book", "Can delete book"),
-        ]
-
-    def __str__(self):
-        return f"{self.title} by {self.author}"
 
 # Create your models here.
