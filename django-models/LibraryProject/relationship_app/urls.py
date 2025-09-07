@@ -4,6 +4,7 @@ from .views import register_view, login_view, logout_view, list_books, LibraryDe
 from .views.admin_view import admin_view
 from .views.librarian_view import librarian_view
 from .views.member_view import member_view
+from . import views
 
 urlpatterns = [
     path('books/', list_books, name='list_books'),
@@ -16,4 +17,7 @@ urlpatterns = [
     path('admin-dashboard/', admin_view, name='admin_view'),
     path('librarian-dashboard/', librarian_view, name='librarian_view'),
     path('member-dashboard/', member_view, name='member_view'),
+    path('add-book/', views.add_book, name='add_book'),
+    path('edit-book/<int:book_id>/', views.edit_book, name='edit_book'),
+    path('delete-book/<int:book_id>/', views.delete_book, name='delete_book'),
 ]
