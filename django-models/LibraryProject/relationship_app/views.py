@@ -1,11 +1,13 @@
 from django.shortcuts import render,  get_object_or_404, redirect
 from django.views.generic.detail import DetailView
-from .models import Library, Book
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView, LogoutView
+from .models import Library
 
 # Function-based view: List all books
 def list_books(request):
