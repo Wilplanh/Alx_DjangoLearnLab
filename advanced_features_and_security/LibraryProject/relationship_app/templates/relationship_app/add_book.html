@@ -1,0 +1,8 @@
+<h1>Add a Book</h1>
+<form method="post">
+    {% csrf_token %}
+    <label>Title: <input type="text" name="title"></label><br>
+    <label>Author ID: <input type="text" name="author"></label><br>
+    <label>Publication Year: <input type="number" name="publication_year"></label><br>
+    <button type="submit">Add Book</button>
+</form>
