@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
+from django.conf import settings
 
 
 class Book(models.Model):
@@ -14,7 +15,7 @@ class Book(models.Model):
 class CustomUser(AbstractUser):
     bio = models.TextField(blank=True)
     date_of_birth = models.DateField(null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True)
+    profile_photo = models.ImageField(upload_to='profile_pictures/', blank=True)
 
     def __str__(self):
         return self.username
