@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import Book
 from .models import CustomUser
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group, Permission
+
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
@@ -37,3 +39,5 @@ class CustomUserAdmin(UserAdmin):
 
 # Register it
 admin.site.register(CustomUser, CustomUserAdmin)
+
+# Create a new group
