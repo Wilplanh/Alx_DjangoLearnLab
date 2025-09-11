@@ -92,7 +92,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
-    }, {% csrf_token %}
+    }, 
 ]
 
 WSGI_APPLICATION = 'LibraryProject.wsgi.application'
