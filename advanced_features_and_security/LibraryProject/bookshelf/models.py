@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 from django.conf import settings
+from django.contrib.auth.models import Permission
+
 
 
 class Book(models.Model):
@@ -46,3 +48,20 @@ class CustomUserManager(BaseUserManager):
             raise ValueError("Superuser must have is_superuser=True.")
 
         return self.create_user(email, password, **extra_fields)
+
+# Create permissions
+can_view = Permission.objects.get(codename='can_view') 
+
+can_create = Permission.objects.get(codename='can_create')
+
+can_edit = Permission.objects.get(codename='can_edit')
+
+can_delete = Permission.objects.get(codename='can_delete')
+
+# Assign permissions to a user
+user.user_permissions.add(can_view, can_create, can_edit)
+user.user_permissions.remove(can_delete)
+
+#Assign permissions to a group
+group.permissions.add(can_view, can_create, can_edit)
+group.permissions.remove(can_delete)
