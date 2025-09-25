@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, permissions
 from .models import Author, Book
 from .serializers import AuthorSerializer, BookSerializer
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 
 # Create your views here.
 
