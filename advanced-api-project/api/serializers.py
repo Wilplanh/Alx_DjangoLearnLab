@@ -12,14 +12,14 @@ class BookSerializer(serializers.ModelSerializer):
 
 # Nested serializer for Book with embedded Author details
 class NestedBookSerializer(serializers.ModelSerializer):
-    author = AuthorSerializer()
+    author = AuthorSerializer(many=True, read_only=True)
 
     class Meta:
         model = Book
-        fields = ['id', 'title', 'author', 'published_date']
+        fields = ['id', 'title', 'author', 'publication_year']
 
 # Serializer with custom validation
-    def validate_published_date(self, value):
-        if value.year > 2025:
-            raise serializers.ValidationError("Published date cannot be in the future.")
+    def validate_publication_year(self, value):
+        if value > 2025:
+            raise serializers.ValidationError("Publication year cannot be in the future.")
         return value
