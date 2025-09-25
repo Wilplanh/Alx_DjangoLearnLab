@@ -1,0 +1,21 @@
+# Book API Endpoints
+
+## Views
+- **ListView (GET /books/)** → Retrieve all books (public).
+- **DetailView (GET /books/<id>/)** → Retrieve a single book by ID (public).
+- **CreateView (POST /books/create/)** → Add a new book (authenticated users).
+- **UpdateView (PUT/PATCH /books/<id>/update/)** → Modify an existing book (authenticated users).
+- **DeleteView (DELETE /books/<id>/delete/)** → Remove a book (authenticated users).
+
+## Permissions
+- Unauthenticated users → read-only access (list, detail).
+- Authenticated users → can create, update, and delete.
+- Optional: Use `IsAdminOrReadOnly` for stricter control.
+
+## Customizations
+- `perform_create`: attaches logged-in user to book.
+- `perform_update`: records updater.
+- `get_queryset`: allows filtering books by author using query params.
+
+## Testing
+Use Postman, curl, or DRF’s browsable API to test all endpoints.
