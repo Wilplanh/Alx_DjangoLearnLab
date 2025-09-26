@@ -19,3 +19,22 @@
 
 ## Testing
 Use Postman, curl, or DRF’s browsable API to test all endpoints.
+
+
+# Book API Advanced Query Features
+
+## Filtering
+- Filter books by title, author, or publication_year:
+  - `/books/?title=The Hobbit`
+  - `/books/?author=1`
+  - `/books/?publication_year=2020`
+
+## Searching
+- Search by keywords in title or author name:
+  - `/books/?search=tolkien`
+  - `/books/?search=harry`
+
+## Ordering
+- Order by title or publication year:
+  - `/books/?ordering=title`
+  - `/books/?ordering=-publication_year`
