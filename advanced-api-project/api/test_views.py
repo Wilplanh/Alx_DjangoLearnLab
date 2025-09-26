@@ -1,5 +1,6 @@
 from django.test import TestCase
 from api.models import Author, Book
+from rest_framework import status, response.data
 
 # Create your tests here.
 class AuthorAPITestCase(TestCase):
