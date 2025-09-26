@@ -38,3 +38,29 @@ Use Postman, curl, or DRF’s browsable API to test all endpoints.
 - Order by title or publication year:
   - `/books/?ordering=title`
   - `/books/?ordering=-publication_year`
+
+
+
+  # API Testing Strategy
+
+## What We Test
+- CRUD endpoints for Book model.
+- Filtering, searching, ordering.
+- Permissions for authenticated vs unauthenticated users.
+
+## Running Tests
+Run all tests:
+python manage.py test api
+
+
+
+
+The test suite uses Django’s built-in test runner with DRF’s APIClient.  
+A separate test database is created automatically and destroyed after tests.  
+
+## Example Cases
+- ✅ Create book (authenticated → 201, unauthenticated → 403)
+- ✅ Retrieve book by ID (200, correct title returned)
+- ✅ Update book (200, title updated in DB)
+- ✅ Delete book (204, object removed)
+- ✅ Filter/search/order (200, correct query results)
