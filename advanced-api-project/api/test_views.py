@@ -5,7 +5,8 @@ from rest_framework.test import APIClient
 from django.contrib.auth.models import User
 
 # Create your tests here.
-def setUp(self):
+class BookAPITestCase(APITestCase):
+    def setUp(self):
         # Create test user
         self.user = User.objects.create_user(username="tester", password="testpass123")
 
