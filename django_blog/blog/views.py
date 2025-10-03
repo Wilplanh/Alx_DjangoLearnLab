@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import login, logout, authenticate
 from django.http import HttpResponse
-from django.contrib.auth.forms import usercreationform
+from django.contrib.auth.forms import usercreationform, AuthenticationForm
 
 
 # Create your views here.
@@ -34,5 +34,8 @@ def register(request):
     else:
         form = usercreationform()
     return render(request, 'register.html', {'form': form})
+
+
+
 
 
