@@ -3,6 +3,7 @@ from django.contrib.auth.models import login, logout, authenticate
 from django.http import HttpResponse
 from django.contrib.auth.forms import usercreationform
 
+
 # Create your views here.
 
 def home(request):
@@ -24,6 +25,14 @@ def user_logout(request):
     logout(request)
     return render(request, 'base.html')
 
-
+def register(request):
+    if request.method == 'POST':
+        form = usercreationform(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'login.html', {'success': 'Account created successfully'})
+    else:
+        form = usercreationform()
+    return render(request, 'register.html', {'form': form})
 
 
