@@ -2,9 +2,10 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 
 
-class CommentForm(forms.Form):
-    author = forms.CharField(max_length=100, label='Your Name')
-    content = forms.CharField(widget=forms.Textarea, label='Your Comment')
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['author', 'content']
 
 # add validation if needed
     def clean_content(self):
