@@ -41,18 +41,18 @@ def profile(request):
     else:
         return render(request, 'login.html', {'error': 'You must be logged in to view this page'})
 
-def listview(request):
+def ListView(request):
     return HttpResponse("This is the list view")
 
-def detailview(request, pk):
+def DetailView(request, pk):
     return HttpResponse(f"This is the detail view for item {pk}")
 
-def createview(request):
+def CreateView(request):
     return HttpResponse("This is the create view")
 
-def updateview(request, pk):
+def UpdateView(request, pk):
     return HttpResponse(f"This is the update view for item {pk}")
 
-def deleteview(request, pk):
+def DeleteView(request, pk):
     return HttpResponse(f"This is the delete view for item {pk}")
 
