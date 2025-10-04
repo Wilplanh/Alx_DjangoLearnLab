@@ -35,6 +35,12 @@ def register(request):
         form = usercreationform()
     return render(request, 'register.html', {'form': form})
 
+def profile(request):
+    if request.user.is_authenticated:
+        return render(request, 'profile.html', {'user': request.user})
+    else:
+        return render(request, 'login.html', {'error': 'You must be logged in to view this page'})
+
 
 
 
