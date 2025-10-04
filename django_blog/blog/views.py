@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
+from taggit.models import Tag
+from .models import Post
 
 # Create your views here.
 
@@ -119,3 +121,25 @@ def CommentDeleteView(request, comment_id):
         comment.delete()
         return redirect('post_detail', pk=post_pk)
     return render(request, 'delete_comment.html', {'comment': comment})
+
+# ✅ Search posts by title, content, or tags
+def search_posts(request):
+    query = request.GET.get('q')
+    results = Post.objects.all()
+
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
+
+    return render(request, 'blog/search_results.html', {'results': results, 'query': query})
+
+
+# ✅ Filter posts by tag
+def posts_by_tag(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    posts = Post.objects.filter(tags__in=[tag])
+    return render(request, 'blog/posts_by_tag.html', {'tag': tag, 'posts': posts})
+
