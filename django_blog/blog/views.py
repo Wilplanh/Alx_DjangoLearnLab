@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.contrib.auth.models import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
-from django.contrib.auth.forms import usercreationform, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 

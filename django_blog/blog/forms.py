@@ -13,3 +13,8 @@ class CommentForm(forms.ModelForm):
         if not content:
             raise forms.ValidationError("Content is required.")
         return content
+
+class TagForm(forms.ModelForm):
+    class Meta:
+        model = tag
+        fields = ['name']

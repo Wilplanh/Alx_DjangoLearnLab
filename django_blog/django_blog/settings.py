@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',  # Custom app for the blog
+    'taggit',  # Tagging functionality
 ]
 
 MIDDLEWARE = [
@@ -125,11 +126,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-TEMPLATES = [
-    {
-        'DIRS': [BASE_DIR / 'templates'],
-    },
-]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
