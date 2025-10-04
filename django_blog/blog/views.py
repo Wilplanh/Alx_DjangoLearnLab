@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import login, logout, authenticate
 from django.http import HttpResponse
 from django.contrib.auth.forms import usercreationform, AuthenticationForm
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 # Create your views here.
@@ -35,6 +36,9 @@ def register(request):
         form = usercreationform()
     return render(request, 'register.html', {'form': form})
 
+
+# CRUD Views for blog posts    
+
 def profile(request):
     if request.user.is_authenticated:
         return render(request, 'profile.html', {'user': request.user})
@@ -56,3 +60,20 @@ def UpdateView(request, pk):
 def DeleteView(request, pk):
     return HttpResponse(f"This is the delete view for item {pk}")
 
+
+# use LoginRequiredMixin and UserPassesTestMixin for author edit and delete views
+class AuthorEditView(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        # Implement your logic to check if the user is the author
+        return True
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("This is the author edit view")
+
+class AuthorDeleteView(LoginRequiredMixin, UserPassesTestMixin):
+    def test_func(self):
+        # Implement your logic to check if the user is the author
+        return True
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse("This is the author delete view")
