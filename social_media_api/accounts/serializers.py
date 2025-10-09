@@ -7,10 +7,14 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class UserSerializer(serializers.ModelSerializer):
+
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, validators=[validate_password])
+    token = serializers.CharField(source='get_token', read_only=True)
+
     class Meta:
-        model = User
-        fields = ['id', 'username', 'email']
+        model = get_user_model
+        fields = ['id', 'username', 'email', 'password', 'token']
 
     def create(self, validated_data):
         user = User.objects.create_user(
@@ -18,27 +22,22 @@ class UserSerializer(serializers.ModelSerializer):
             email=validated_data['email'],
             password=validated_data['password']
         )
+        token = Token.objects.create(user=user)
         return user
-
-class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, validators=[validate_password])
-    token = serializers.CharField(source='get_token', read_only=True)
-
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'password', 'token']
-
-    def get_token(self, obj):
-        token = Token.objects.get(user=obj)
-        return token.key
 
 class LoginViewSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
+    token = serializers.CharField(read_only=True)
 
-class profileSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        user = User.objects.get(username=validated_data['username'])
+        token, created = Token.objects.get_or_create(user=user)
+        return {'username': user.username, 'token': token.key}
+
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'token']
 
 
