@@ -11,6 +11,7 @@ from rest_framework.authtoken.models import Token
 # Create your views here.
 
 class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
     serializer_class = RegisterSerializer
 
 class LoginView(View):
