@@ -28,3 +28,5 @@ class LoginView(View):
 class ProfileView(generics.RetrieveAPIView):
     queryset = get_user_model().objects.all()
     serializer_class = ProfileSerializer
+
+
