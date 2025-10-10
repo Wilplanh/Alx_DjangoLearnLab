@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-class Notifications(models.Model):
+class Notification(models.Model):
     
     recipient = models.ForeignKey(
         settings.AUTH_USER_MODEL,
