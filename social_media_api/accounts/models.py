@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from rest_framework import permissions, serializers, generics
-from 
+
 
 # Create your models here.
 
@@ -32,12 +32,4 @@ class CustomUser(AbstractUser):
         return self.username
 
 
-class follow_user(models.Model):
-    permissions = [permissions.IsAuthenticated]
-    user = models.ForeignKey(CustomUser, related_name='follower', on_delete=models.CASCADE
 
-
-class unfollow_user(models.Model):
-    permissions = [permissions.IsAuthenticated]
-    user = models.ForeignKey(CustomUser, related_name='unfollower', on_delete=models.CASCADE)
-    unfollowed_user = models.ForeignKey(CustomUser, related_name='unfollowed', on_delete=models.CASCADE)
