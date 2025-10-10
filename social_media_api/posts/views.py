@@ -41,4 +41,54 @@ class FeedView(generics.ListAPIView):
         following_users = user.following.all()
 
         # Return posts by followed users, ordered by newest first
-        return Post.objects.filter(author__in=following_users).order_by('-created_at') 
+        return Post.objects.filter(author__in=following_users).order_by('-created_at')
+
+
+class LikePostView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        user = request.user
+
+        # Check if already liked
+        if Like.objects.filter(user=user, post=post).exists():
+            return Response({"detail": "You already liked this post."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Create Like
+        Like.objects.create(user=user, post=post)
+
+        # Create Notification (only if the liker is not the post author)
+        if user != post.author:
+            Notification.objects.create(
+                recipient=post.author,
+                actor=user,
+                verb="liked your post",
+                target=post
+            )
+
+        return Response({"detail": "Post liked successfully."}, status=status.HTTP_201_CREATED)
+
+
+class UnlikePostView(generics.GenericAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        user = request.user
+
+        like = Like.objects.filter(user=user, post=post).first()
+        if not like:
+            return Response({"detail": "You haven’t liked this post."}, status=status.HTTP_400_BAD_REQUEST)
+
+        like.delete()
+
+        # (Optional) Delete related notification
+        Notification.objects.filter(
+            recipient=post.author,
+            actor=user,
+            verb="liked your post",
+            target_object_id=post.id
+        ).delete()
+
+        return Response({"detail": "Post unliked successfully."}, status=status.HTTP_200_OK) 

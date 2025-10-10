@@ -27,3 +27,8 @@ class Comment(models.Model):
     
     def __str__(self):
         return f'Comment by {self.author} on {self.post.title}'
+
+
+class Like(models.Model):
+    post = models.ForeignKey(post, related_name='likes', on_delete=models.CASCADE)
+    user = models.ForeignKey(post, related_name='likes', on_delete=models.CASCADE)
